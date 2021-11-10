@@ -16,16 +16,18 @@ export default async function getCurrentWeather(cityName){
             const humidity = data.main.humidity
             const currentTemperature = data.main.temp
             var weather = data.weather[0].description
-
+            var iconName = ''
             switch (weather) {
                 case 'nubes' : weather = 'Nublado';
+                               iconName = 'cloud';
                                break;
                 case 'muy nuboso' : weather = 'Mayormente nublado'
+                                iconName = 'cloud';
                                 break;
             }
 
-            results = [currentTemperature, temperatureMin, temperatureMax, locationName, wind, humidity, weather]
-            // [currentTemperature, temperatureMin, temperatureMax, locationName, wind, humidity]
+            results = [currentTemperature, temperatureMin, temperatureMax, locationName, wind, humidity, weather, iconName]
+           
             console.log(weather)
         })
         .catch(function (error) {

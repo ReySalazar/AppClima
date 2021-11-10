@@ -28,8 +28,9 @@ export default function App() {
   const [wind, setWind] = useState("7");
   const [humidity, setHumidity] = useState("68");
   const [weather, setWeather] = useState("Nublado");
+  const [iconName, setIconName] = useState("sun");
 
-  var hora = new Date().toLocaleDateString();
+  var fecha = new Date().toLocaleDateString();
 
   const styles = StyleSheet.create({
     container: {
@@ -109,10 +110,10 @@ export default function App() {
     const data = await getCurrentWeather(cityName);
 
     // La api devuelve un vector con datos en el siguiente orden
-    // [currentTemperature, temperatureMin, temperatureMax, locationName, wind, humidity, weather]
-    //         0                  1              2                3        4        5        6
+    // [currentTemperature, temperatureMin, temperatureMax, locationName, wind, humidity, weather, iconName]
+    //         0                  1              2                3        4        5        6        7
 
-    var temperature = data[0];
+    let temperature = data[0];
     temperature = temperature.toFixed(1);
 
     var tempMin = data[1];
@@ -128,6 +129,7 @@ export default function App() {
     setWind(data[4]);
     setHumidity(data[5]);
     setWeather(data[6]);
+    setIconName(data[7]);
     console.log(data[6]);
   }
 
@@ -158,7 +160,7 @@ export default function App() {
 
         <Feather
           style={{ marginTop: 50 }}
-          name="sun"
+          name={iconName}  // sun, cloud, cloud-rain, cloud-snow, cloud-drizzle, cloud-lightning, wind
           size={40}
           color="orange"
         />
@@ -169,7 +171,10 @@ export default function App() {
         </View>
 
         <Text style={styles.localizationText}>
-          {locationName}, {hora}
+          {locationName}
+        </Text>
+        <Text style={styles.localizationText}>
+          {fecha}
         </Text>
         <Text style={styles.infoText}>{weather}</Text>
 
